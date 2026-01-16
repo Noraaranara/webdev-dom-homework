@@ -9,7 +9,7 @@
   <body>
     <div class="container">
       <ul class="comments">
-        <li class="comment">
+        <!-- <li class="comment">
           <div class="comment-header">
             <div>Глеб Фокин</div>
             <div>12.02.22 12:18</div>
@@ -42,7 +42,7 @@
               <button class="like-button -active-like"></button>
             </div>
           </div>
-        </li>
+        </li> -->
       </ul>
       <div class="add-form">
         <input
@@ -69,6 +69,71 @@
     const textInput = document.querySelector('.add-form-text');
     const addBtn = document.querySelector('.add-form-button');
     const commentsList = document.querySelector('.comments');
+    const now = new Date();
+      const dateString = now.toLocaleDateString('ru-RU') + ', ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit'});
+
+    const commentsGroup = [
+      {
+        name: "Глеб Фокин",
+        date: new Date(),
+        text: "Это будет первый комментарий на этой странице",
+        likes: 3,
+        isLiked: false,
+      },
+      {
+        name: "Варвара Н.",
+        date: new Date(),
+        text: "Мне нравится как оформлена эта страница! ❤",
+        likes: 75,
+        isLiked: true,
+      }
+    ]
+
+    const initClickLikes = () => {
+      const likes = document.querySelectorAll(".like-button");
+
+      for (const like of likes) {
+        like.addEventListener("click", () => {
+          const index = like.dataset.index;
+          const comment = commentsGroup[index];
+
+          if (comment.isLiked) {
+            comment.likes--;
+            comment.isLiked = false;
+          } else {
+            comment.likes++;
+            comment.isLiked = true
+          }
+          renderComments();
+        });
+      }
+    }
+
+    const renderComments = () => {
+      commentsList.innerHTML = commentsGroup.map((comment, index) => {
+        return `<li class="comment">
+          <div class="comment-header">
+            <div>${comment.name}</div>
+            <div>${dateString}</div>
+          </div>
+          <div class="comment-body">
+            <div class="comment-text">
+            ${comment.text}
+            </div>
+          </div>
+          <div class="comment-footer">
+            <div class="likes">
+              <span class="likes-counter">${comment.likes}</span>
+              <button data-index="${index}" class="like-button ${comment.isLiked ? '-active-like' : ''}"></button>
+            </div>
+          </div>
+        </li>`;
+      }).join("");
+
+      initClickLikes();
+    }
+
+    renderComments();
 
     nameInput.addEventListener('input', () => {
       console.log('Имя изменено:', nameInput.value);
@@ -84,30 +149,39 @@
         return
       }
 
-      const now = new Date();
-      const dateString = now.toLocaleDateString('ru-RU') + ', ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit'});
+      commentsGroup.push(
+        {name: nameInput.value,
+        date: dateString,
+        text: textInput.value,
+        likes: 0,
+        isLiked: false,}
+      );
 
-      const newComment = `
-      <li class="comment">
-          <div class="comment-header">
-            <div>${nameInput.value}.</div>
-            <div>${dateString}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-              ${textInput.value}
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter">0</span>
-              <button class="like-button -active-like"></button>
-            </div>
-          </div>
-        </li>
-      `;
+      renderComments();
 
-      commentsList.innerHTML += newComment;
+      
+
+      // const newComment = `
+      // <li class="comment">
+      //     <div class="comment-header">
+      //       <div>${nameInput.value}.</div>
+      //       <div>${dateString}</div>
+      //     </div>
+      //     <div class="comment-body">
+      //       <div class="comment-text">
+      //         ${textInput.value}
+      //       </div>
+      //     </div>
+      //     <div class="comment-footer">
+      //       <div class="likes">
+      //         <span class="likes-counter">0</span>
+      //         <button class="like-button -active-like"></button>
+      //       </div>
+      //     </div>
+      //   </li>
+      // `;
+
+      // commentsList.innerHTML += newComment;
 
       nameInput.value = "";
       textInput.value = "";
