@@ -79,7 +79,7 @@
     });
 
     addBtn.addEventListener('click', () => {
-      if (!nameInput.value || !textInput.value) {
+      if (!nameInput.value.trim() || !textInput.value.trim()) {
         alert('Пожалуйста, заполните все поля!');
         return
       }
