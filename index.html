@@ -93,7 +93,8 @@
       const likes = document.querySelectorAll(".like-button");
 
       for (const like of likes) {
-        like.addEventListener("click", () => {
+        like.addEventListener("click", (event) => {
+          event.stopPropagation();
           const index = like.dataset.index;
           const comment = commentsGroup[index];
 
@@ -109,9 +110,25 @@
       }
     }
 
+    const initClickComment = () => {
+      const commentsEls = document.querySelectorAll(".comment");
+
+      for (const commentsEl of commentsEls) {
+        commentsEl.addEventListener("click", () => {
+          const index = commentsEl.dataset.index;
+          const comment = commentsGroup[index];
+
+          textInput.value = `> ${comment.name}: ${comment.text}\n\n`;
+          textInput.focus();
+
+          renderComments();
+        });
+      }
+    }
+
     const renderComments = () => {
       commentsList.innerHTML = commentsGroup.map((comment, index) => {
-        return `<li class="comment">
+        return `<li data-index="${index}" class="comment">
           <div class="comment-header">
             <div>${comment.name}</div>
             <div>${dateString}</div>
@@ -131,6 +148,7 @@
       }).join("");
 
       initClickLikes();
+      initClickComment();
     }
 
     renderComments();
@@ -150,38 +168,14 @@
       }
 
       commentsGroup.push(
-        {name: nameInput.value,
+        {name: nameInput.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
         date: dateString,
-        text: textInput.value,
+        text: textInput.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
         likes: 0,
         isLiked: false,}
       );
 
       renderComments();
-
-      
-
-      // const newComment = `
-      // <li class="comment">
-      //     <div class="comment-header">
-      //       <div>${nameInput.value}.</div>
-      //       <div>${dateString}</div>
-      //     </div>
-      //     <div class="comment-body">
-      //       <div class="comment-text">
-      //         ${textInput.value}
-      //       </div>
-      //     </div>
-      //     <div class="comment-footer">
-      //       <div class="likes">
-      //         <span class="likes-counter">0</span>
-      //         <button class="like-button -active-like"></button>
-      //       </div>
-      //     </div>
-      //   </li>
-      // `;
-
-      // commentsList.innerHTML += newComment;
 
       nameInput.value = "";
       textInput.value = "";
