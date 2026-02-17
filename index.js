@@ -1,12 +1,20 @@
-import {
-    nameInput,
-    textInput,
-    addBtn,
-    dateString,
-} from './modules/constants.js'
+import { nameInput, textInput, addBtn } from './modules/constants.js'
 import { renderComments } from './modules/renderComments.js'
-import { commentsGroup } from './modules/comments.js'
+import { updateComments } from './modules/comments.js'
 import { sanitizeInput } from './modules/processData.js'
+
+const getComments = () => {
+    return fetch('https://wedev-api.sky.pro/api/v1/nora-solntse/comments').then(
+        (response) => {
+            return response.json()
+        },
+    )
+}
+
+getComments().then((data) => {
+    updateComments(data.comments)
+    renderComments()
+})
 
 addBtn.addEventListener('click', () => {
     if (!nameInput.value.trim() || !textInput.value.trim()) {
@@ -14,20 +22,23 @@ addBtn.addEventListener('click', () => {
         return
     }
 
-    commentsGroup.push({
-        name: sanitizeInput(nameInput.value),
-        date: dateString,
-        text: sanitizeInput(textInput.value),
-        likes: 0,
-        isLiked: false,
-    })
+    const newComment = {
+        text: `${sanitizeInput(textInput.value)}`,
+        name: `${sanitizeInput(nameInput.value)}`,
+    }
 
-    renderComments()
+    fetch('https://wedev-api.sky.pro/api/v1/nora-solntse/comments', {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+    })
+        .then(() => {
+            return getComments()
+        })
+        .then((data) => {
+            updateComments(data.comments)
+            renderComments()
+        })
 
     nameInput.value = ''
     textInput.value = ''
 })
-
-renderComments()
-
-console.log('It  works!')

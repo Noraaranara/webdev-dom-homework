@@ -31,7 +31,7 @@ export const initClickComment = () => {
             const index = commentsEl.dataset.index
             const comment = commentsGroup[index]
 
-            textInput.value = `> ${comment.name}: ${comment.text}\n\n`
+            textInput.value = `> ${comment.author.name}: ${comment.text}\n\n`
             textInput.focus()
 
             renderComments()

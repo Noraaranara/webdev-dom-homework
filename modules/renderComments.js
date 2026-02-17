@@ -7,7 +7,7 @@ export const renderComments = () => {
         .map((comment, index) => {
             return `<li data-index="${index}" class="comment">
         <div class="comment-header">
-        <div>${comment.name}</div>
+        <div>${comment.author.name}</div>
         <div>${dateString}</div>
         </div>
         <div class="comment-body">
