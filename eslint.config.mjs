@@ -27,6 +27,7 @@ export default [
                     tabWidth: 4,
                     semi: false,
                     singleQuote: true,
+                    // endOfLine: auto,
                 },
             ],
         },

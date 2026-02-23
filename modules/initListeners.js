@@ -1,6 +1,7 @@
 import { commentsGroup } from './comments.js'
 import { renderComments } from './renderComments.js'
-import { textInput } from './constants.js'
+import { textInput, nameInput, addBtn } from './constants.js'
+import { fetchPost } from './fetchAndRenderComments.js'
 
 export const initClickLikes = () => {
     const likes = document.querySelectorAll('.like-button')
@@ -37,4 +38,15 @@ export const initClickComment = () => {
             renderComments()
         })
     }
+}
+
+export const initClickBtn = () => {
+    addBtn.addEventListener('click', () => {
+        if (!nameInput.value.trim() || !textInput.value.trim()) {
+            alert('Пожалуйста, заполните все поля!')
+            return
+        }
+
+        fetchPost()
+    })
 }
