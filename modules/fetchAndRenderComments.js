@@ -3,16 +3,13 @@ import { renderComments } from './renderComments.js'
 import { sanitizeInput } from './processData.js'
 import { textInput, nameInput, addForm, commentLoader } from './constants.js'
 import { createCommentLoader, hiddenLoader } from './loaders.js'
+import { getRequest, postRequest } from './api.js'
 
 export const fetchAndRenderComments = () => {
-    return fetch('https://wedev-api.sky.pro/api/v1/nora-solntse/comments')
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            updateComments(data.comments)
-            renderComments()
-        })
+    return getRequest().then((data) => {
+        updateComments(data.comments)
+        renderComments()
+    })
 }
 
 export const fetchPost = () => {
@@ -25,10 +22,7 @@ export const fetchPost = () => {
         name: `${sanitizeInput(nameInput.value)}`,
     }
 
-    return fetch('https://wedev-api.sky.pro/api/v1/nora-solntse/comments', {
-        method: 'POST',
-        body: JSON.stringify(newComment),
-    })
+    return postRequest(newComment)
         .then(() => {
             return fetchAndRenderComments()
         })
