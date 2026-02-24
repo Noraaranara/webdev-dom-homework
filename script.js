@@ -10,14 +10,14 @@ const dateString =
 
 const commentsGroup = [
     {
-        name: 'Глеб Фокин',
+        author: 'Глеб Фокин',
         date: new Date(),
         text: 'Это будет первый комментарий на этой странице',
         likes: 3,
         isLiked: false,
     },
     {
-        name: 'Варвара Н.',
+        author: 'Варвара Н.',
         date: new Date(),
         text: 'Мне нравится как оформлена эта страница! ❤',
         likes: 75,
@@ -54,7 +54,7 @@ const initClickComment = () => {
             const index = commentsEl.dataset.index
             const comment = commentsGroup[index]
 
-            textInput.value = `> ${comment.name}: ${comment.text}\n\n`
+            textInput.value = `> ${comment.author}: ${comment.text}\n\n`
             textInput.focus()
 
             renderComments()
@@ -67,7 +67,7 @@ const renderComments = () => {
         .map((comment, index) => {
             return `<li data-index="${index}" class="comment">
         <div class="comment-header">
-        <div>${comment.name}</div>
+        <div>${comment.author}</div>
         <div>${dateString}</div>
         </div>
         <div class="comment-body">
@@ -98,7 +98,7 @@ addBtn.addEventListener('click', () => {
     }
 
     commentsGroup.push({
-        name: nameInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+        author: nameInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
         date: dateString,
         text: textInput.value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
         likes: 0,
