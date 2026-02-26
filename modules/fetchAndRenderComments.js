@@ -30,7 +30,10 @@ export const fetchPost = () => {
             nameInput.value = ''
             textInput.value = ''
         })
-        .then(() => {
+        .catch((error) => {
+            alert(error.message)
+        })
+        .finally(() => {
             hiddenLoader()
             addForm.classList.remove('hidden')
         })
