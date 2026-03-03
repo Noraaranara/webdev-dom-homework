@@ -2,7 +2,19 @@ const API_URL = 'https://wedev-api.sky.pro/api/v1/nora-solntse/comments/'
 
 export const getRequest = () => {
     return fetch(`${API_URL}`).then((response) => {
-        return response.json()
+        if (response.ok) {
+            return response.json()
+        }
+
+        if (response.status === 500) {
+            throw new Error('Сервер сломался, попробуй позже')
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                'Кажется, у вас сломался интернет, попробуйте позже',
+            )
+        }
     })
 }
 
@@ -15,17 +27,21 @@ export const postRequest = (data) => {
             forceError: true,
         }),
     }).then((response) => {
-        if (response.status === 201) {
+        if (response.ok) {
             return response.json()
-        } else {
-            if (response.status === 500) {
-                throw new Error('Сервер сломался, попробуй позже')
-            }
-            if (response.status === 400) {
-                throw new Error(
-                    'Имя и комментарий должны быть не короче 3 символов',
-                )
-            }
+        }
+
+        if (response.status === 500) {
+            throw new Error('Сервер сломался, попробуй позже')
+        }
+
+        if (response.status === 400) {
+            throw new Error(
+                'Имя и комментарий должны быть не короче 3 символов',
+            )
+        }
+
+        if (!response.ok) {
             throw new Error(
                 'Кажется, у вас сломался интернет, попробуйте позже',
             )
