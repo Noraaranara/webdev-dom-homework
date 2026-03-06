@@ -1,7 +1,6 @@
 import { registration, updateToken } from './api.js'
 import { app } from './constants.js'
 import { fetchAndRenderComments } from './fetchAndRenderComments.js'
-// import { initClickBtn } from './initListeners.js'
 
 export const renderRegistration = () => {
     app.innerHTML = `

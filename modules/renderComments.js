@@ -6,6 +6,16 @@ import {
     initClickComment,
     initClickBtn,
 } from './initListeners.js'
+import { renderLogin } from './renderLogin.js'
+
+export const createLink = () => {
+    const link = document.createElement('a')
+    link.classList.add('link')
+    link.textContent = 'Чтобы добавить комментарий, авторизуйтесь'
+    link.style.color = 'white'
+    link.href = '#'
+    return link
+}
 
 export const renderComments = () => {
     const commentHtml = commentsGroup
@@ -49,9 +59,16 @@ export const renderComments = () => {
         <div class="add-form-row">
             <button class="add-form-button">Написать</button>
         </div>
-    </div>`
+    </div>
+        ${createLink().outerHTML}`
 
     app.innerHTML = appHtml
+
+    const link = createLink()
+    link.addEventListener('click', () => {
+        // event.preventDefault()
+        renderLogin()
+    })
 
     initClickLikes()
     initClickComment()

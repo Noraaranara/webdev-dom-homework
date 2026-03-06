@@ -1,9 +1,13 @@
 import { login, updateToken } from './api.js'
-import { app } from './constants.js'
+import { app, commentsList } from './constants.js'
 import { fetchAndRenderComments } from './fetchAndRenderComments.js'
 import { renderRegistration } from './renderRegistration.js'
 
 export const renderLogin = () => {
+    console.log(commentsList)
+    if (commentsList) {
+        commentsList.style.display = 'none'
+    }
     app.innerHTML = `
     <h1>Страница входа</h1>
     <div class="form">

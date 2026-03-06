@@ -1,7 +1,7 @@
 import { updateComments } from './comments.js'
 import { renderComments } from './renderComments.js'
 import { sanitizeInput } from './processData.js'
-import { textInput, nameInput, addForm, commentLoader } from './constants.js'
+import { commentLoader } from './constants.js'
 import { createCommentLoader, hiddenLoader } from './loaders.js'
 import { getRequest, postRequest } from './api.js'
 
@@ -13,6 +13,9 @@ export const fetchAndRenderComments = () => {
 }
 
 export const fetchPost = () => {
+    const nameInput = document.querySelector('.add-form-name')
+    const textInput = document.querySelector('.add-form-text')
+    const addForm = document.querySelector('.add-form')
     createCommentLoader()
     commentLoader.style.display = 'block'
     addForm.classList.add('hidden')
