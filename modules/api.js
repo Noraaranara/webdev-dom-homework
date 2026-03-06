@@ -1,8 +1,17 @@
 const host = 'https://wedev-api.sky.pro/api/v2/nora-solntse/comments/'
-let token = ''
+export let token = ''
 
 export const updateToken = (newToken) => {
     token = newToken
+}
+
+export let userName = ''
+
+export const updateUserName = (name) => {
+    userName = name
+}
+export const getUserName = () => {
+    return userName
 }
 
 const authToken = 'https://wedev-api.sky.pro/api/user'

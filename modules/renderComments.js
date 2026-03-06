@@ -1,3 +1,4 @@
+import { getUserName } from './api.js'
 import { commentsGroup } from './comments.js'
 import { dateString } from './constants.js'
 import { app } from './constants.js'
@@ -8,14 +9,11 @@ import {
 } from './initListeners.js'
 import { renderLogin } from './renderLogin.js'
 
-export const createLink = () => {
-    const link = document.createElement('a')
-    link.classList.add('link')
-    link.textContent = 'Чтобы добавить комментарий, авторизуйтесь'
-    link.style.color = 'white'
-    link.href = '#'
-    return link
-}
+const userName = getUserName()
+
+const authBlock = `
+    <a class="login-link">Чтобы добавить комментарий, авторизуйтесь</a>
+`
 
 export const renderComments = () => {
     const commentHtml = commentsGroup
@@ -47,7 +45,7 @@ export const renderComments = () => {
     <div class="add-form">
         <input
             type="text"
-            class="add-form-name"
+            class="add-form-name" value="${userName}"${userName ? 'readonly' : ''} readonly
             placeholder="Введите ваше имя"
         />
         <textarea
@@ -60,17 +58,18 @@ export const renderComments = () => {
             <button class="add-form-button">Написать</button>
         </div>
     </div>
-        ${createLink().outerHTML}`
+        ${authBlock}`
 
     app.innerHTML = appHtml
 
-    const link = createLink()
-    link.addEventListener('click', () => {
-        // event.preventDefault()
-        renderLogin()
-    })
+    const loginLink = document.querySelector('.login-link')
+    if (loginLink) {
+        loginLink.addEventListener('click', () => {
+            renderLogin()
+        })
 
-    initClickLikes()
-    initClickComment()
-    initClickBtn()
+        initClickLikes()
+        initClickComment()
+        initClickBtn()
+    }
 }

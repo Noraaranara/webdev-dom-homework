@@ -1,13 +1,9 @@
-import { login, updateToken } from './api.js'
-import { app, commentsList } from './constants.js'
+import { login, updateToken, updateUserName } from './api.js'
+import { app } from './constants.js'
 import { fetchAndRenderComments } from './fetchAndRenderComments.js'
 import { renderRegistration } from './renderRegistration.js'
 
 export const renderLogin = () => {
-    console.log(commentsList)
-    if (commentsList) {
-        commentsList.style.display = 'none'
-    }
     app.innerHTML = `
     <h1>Страница входа</h1>
     <div class="form">
@@ -31,6 +27,7 @@ export const renderLogin = () => {
             password: passwordEl.value,
         }).then((responseData) => {
             updateToken(responseData.user.token)
+            updateUserName(responseData.user.name)
             fetchAndRenderComments()
         })
     })
