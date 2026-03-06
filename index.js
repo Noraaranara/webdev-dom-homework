@@ -2,5 +2,7 @@ import { loadComments } from './modules/loaders.js'
 
 import { renderLogin } from './modules/renderLogin.js'
 
-renderLogin()
-loadComments()
+document.addEventListener('DOMContentLoaded', () => {
+    renderLogin()
+    loadComments()
+})

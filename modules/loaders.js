@@ -17,9 +17,13 @@ container.parentElement.insertBefore(createDateLoader(), commentsList)
 
 export const loadComments = () => {
     dateLoader.style.display = 'block'
-    fetchAndRenderComments().then(() => {
-        dateLoader.style.display = 'none'
-    })
+    fetchAndRenderComments()
+        .catch((error) => {
+            console.error(error)
+        })
+        .finally(() => {
+            dateLoader.style.display = 'none'
+        })
 }
 
 export const createCommentLoader = () => {
