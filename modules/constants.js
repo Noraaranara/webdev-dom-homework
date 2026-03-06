@@ -4,6 +4,7 @@ const textInput = document.querySelector('.add-form-text')
 const addForm = document.querySelector('.add-form')
 const commentsList = document.querySelector('.comments')
 const container = document.querySelector('.container')
+const app = document.getElementById('app')
 const dateLoader = document.createElement('div')
 const commentLoader = document.createElement('div')
 const now = new Date()
@@ -23,4 +24,5 @@ export {
     commentsList,
     now,
     dateString,
+    app,
 }

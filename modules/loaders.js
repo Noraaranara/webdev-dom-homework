@@ -1,10 +1,7 @@
-import {
-    commentsList,
-    dateLoader,
-    commentLoader,
-    addForm,
-} from './constants.js'
+import { dateLoader, commentLoader, container } from './constants.js'
 import { fetchAndRenderComments } from './fetchAndRenderComments.js'
+const addForm = document.querySelector('.add-form')
+const forfor = document.querySelector('.for')
 
 export const createDateLoader = () => {
     dateLoader.classList.add('dateLoader')
@@ -12,13 +9,17 @@ export const createDateLoader = () => {
     return dateLoader
 }
 
-commentsList.parentNode.insertBefore(createDateLoader(), commentsList)
+container.insertBefore(createDateLoader(), forfor)
 
 export const loadComments = () => {
     dateLoader.style.display = 'block'
-    fetchAndRenderComments().then(() => {
-        dateLoader.style.display = 'none'
-    })
+    fetchAndRenderComments()
+        .catch((error) => {
+            console.error(error)
+        })
+        .finally(() => {
+            dateLoader.style.display = 'none'
+        })
 }
 
 export const createCommentLoader = () => {
@@ -30,7 +31,7 @@ export const createCommentLoader = () => {
     return commentLoader
 }
 
-addForm.parentNode.insertBefore(createCommentLoader(), addForm)
+container.insertBefore(createCommentLoader(), addForm)
 
 export const hiddenLoader = () => {
     if (commentLoader) {
