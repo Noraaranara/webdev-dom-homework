@@ -1,9 +1,14 @@
 import { commentsGroup } from './comments.js'
-import { dateString, commentsList } from './constants.js'
-import { initClickLikes, initClickComment } from './initListeners.js'
+import { dateString } from './constants.js'
+import { app } from './constants.js'
+import {
+    initClickLikes,
+    initClickComment,
+    initClickBtn,
+} from './initListeners.js'
 
 export const renderComments = () => {
-    commentsList.innerHTML = commentsGroup
+    const commentHtml = commentsGroup
         .map((comment, index) => {
             return `<li data-index="${index}" class="comment">
         <div class="comment-header">
@@ -25,6 +30,30 @@ export const renderComments = () => {
         })
         .join('')
 
+    const appHtml = `
+    <ul class="comments">
+        ${commentHtml}
+    </ul>
+    <div class="add-form">
+        <input
+            type="text"
+            class="add-form-name"
+            placeholder="Введите ваше имя"
+        />
+        <textarea
+            type="textarea"
+            class="add-form-text"
+            placeholder="Введите ваш коментарий"
+            rows="4"
+        ></textarea>
+        <div class="add-form-row">
+            <button class="add-form-button">Написать</button>
+        </div>
+    </div>`
+
+    app.innerHTML = appHtml
+
     initClickLikes()
     initClickComment()
+    initClickBtn()
 }

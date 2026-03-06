@@ -3,6 +3,7 @@ import {
     dateLoader,
     commentLoader,
     addForm,
+    container,
 } from './constants.js'
 import { fetchAndRenderComments } from './fetchAndRenderComments.js'
 
@@ -12,7 +13,7 @@ export const createDateLoader = () => {
     return dateLoader
 }
 
-commentsList.parentNode.insertBefore(createDateLoader(), commentsList)
+container.parentElement.insertBefore(createDateLoader(), commentsList)
 
 export const loadComments = () => {
     dateLoader.style.display = 'block'
@@ -30,7 +31,7 @@ export const createCommentLoader = () => {
     return commentLoader
 }
 
-addForm.parentNode.insertBefore(createCommentLoader(), addForm)
+document.body.insertBefore(createCommentLoader(), addForm)
 
 export const hiddenLoader = () => {
     if (commentLoader) {

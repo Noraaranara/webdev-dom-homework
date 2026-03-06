@@ -23,12 +23,7 @@ export default [
         rules: {
             'prettier/prettier': [
                 'error',
-                {
-                    tabWidth: 4,
-                    semi: false,
-                    singleQuote: true,
-                    // endOfLine: auto,
-                },
+                { pretabWidth: 4, semi: false, singleQuote: true },
             ],
         },
     },
